@@ -1,0 +1,229 @@
+ \documentclass[a4paper,12pt,oneside]{report}
+\usepackage{graphicx}%Package for adding jpeg images
+\usepackage{setspace}%linespacing single, onehalf, double
+\usepackage{anysize}%For changing margin size dynamically
+\usepackage{color}%For changing the color of text
+\usepackage{epsfig}%For recognizing eps figures in PDFTex
+\usepackage{epstopdf}%For pdflatex to recognize eps type
+\usepackage{multirow}%For multiple row support in tables
+\usepackage{mathptmx}%Times New Roman
+\usepackage{tikz}
+\usepackage{pgfkeys}
+\usetikzlibrary{shapes,arrows}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage{longtable}
+\usepackage[usenames,dvipsnames]{pstricks}
+ \usepackage{epsfig}
+ \usepackage{pst-grad} % For gradients
+ \usepackage{pst-plot} % For axes
+\usepackage{array} % for extrarowheight
+\usepackage{subfigure}%For including figures separated by horizontal space
+\usepackage{eso-pic}% For watermark
+\usepackage{everypage}%For watermark
+\usepackage{fancyhdr}% For manipulating headers and footers
+\usepackage{url}% For redirecting urls
+\usepackage[subfigure]{tocloft}%Change default table of contents
+\usepackage[pdftex]{hyperref}%For generating pdf indexes and reference links
+\usepackage{parskip}% Used for introducing paragraph indenting and lineskips between paragraphs
+\usepackage{titlesec} %Mods for chapter, heading sizes
+\usepackage{pstricks}%Graphic vectoring package. Lots of possibilities here 
+%NOTE : you must add -shell-escape option after pdflatex command to include the  pstricks graphics
+\usepackage{pst-node}% For Flowcharts
+\usepackage{pst-blur}
+\usepackage{setspace}
+\usepackage{pst-plot}%Draws graph plots
+\usepackage{pst-bar}%Draws bars 
+%\usepackage{auto-pst-pdf}%Converts pstricks graphics to pdf format
+\usepackage{ragged2e}%Gives the option Justify (both ragged left and right) for paragraph formatting
+\usepackage{arrayjob}
+\usepackage{alltt}
+\usepackage{listings}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage[T1]{fontenc}
+\usepackage{pdfpages}
+\usepackage{wrapfig}
+\usepackage{lipsum}  
+\usepackage{blindtext}
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+	%breaklinks=true,  
+	%colorlinks=false,
+    urlcolor=black
+}
+\usepackage{pdflscape}
+\renewcommand{\chaptername}{CHAPTER}
+\renewcommand{\bibname}{REFERENCES}
+\renewcommand*\listfigurename{\textbf{\fontsize{16}{32}\selectfont \hfill List of Figures \hfill}}
+\renewcommand*\listtablename{\textbf{\fontsize{16}{32}\selectfont \hfill List of Tables \hfill}}
+\renewcommand{\figurename}{\bfseries\fontsize{10}{20}\selectfont \textbf{Figure } }
+\renewcommand{\tablename}{\bfseries\fontsize{10}{20}\selectfont \textbf{Table } }
+\titleformat{\chapter}[display]
+  {\centering\bfseries \fontsize{14}{28}\selectfont }
+  {\chaptertitlename\  \thechapter}{-20pt}{ \fontsize{16}{32}\selectfont }
+\titlespacing{\chapter}{0pt}{0pt}{0pt}
+\titleformat{\section} {\bfseries \fontsize{14}{28}\selectfont }{\thesection}{1em}{}
+\titleformat{\subsection} {\bfseries \fontsize{12}{24}\selectfont }{\thesubsection}{1em}{}
+\titleformat{\subsubsection} {\bfseries \fontsize{12}{24}\selectfont }{\thesubsubsection}{1em}{}
+
+%Formatting for figures
+\renewcommand{\thesubfigure}{\thefigure.\arabic{subfigure}}
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\textfraction}{0.1}
+\renewcommand{\floatpagefraction}{0.85}
+
+%Table of  contents mods
+\renewcommand{\cftchapfont}{%
+  \fontsize{14}{28}\selectfont
+}
+\renewcommand{\contentsname}{\textbf{ \fontsize{16}{32}\selectfont  \begin{center}
+CONTENTS 
+\end{center}}}
+\setlength{\cftbeforetoctitleskip}{0in}
+\setlength{\cftaftertoctitleskip}{.5in}
+%\setlength{\cftbeforechapskip}{.1in} 
+%\setlength{\cftbeforesecskip}{.1in}
+%use these only if the spacing between chapters and sections is not right
+
+\hoffset 0.25in
+\textwidth 6.27in
+
+%The following code modifies the numbering scheme for itemlists
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand{\labelenumii}{\theenumi.\theenumii}
+
+%Code for watermarking follows
+
+\makeatletter 
+\newcommand{\rmnum}[1]{\romannumeral #1}
+\newcommand{\Rmnum}[1]{\expandafter\@slowromancap\romannumeral #1@}
+\newenvironment{water}{\AddThispageHook{\waterb}}
+
+\makeatletter
+\newcommand{\waterb}{
+\AddToShipoutPicture*{%
+            \setlength{\@tempdimb}{.1\paperwidth}%
+            \setlength{\@tempdimc}{.21\paperheight}%
+            \setlength{\unitlength}{1pt}%
+            \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){%
+	   \includegraphics[scale = 1.4]{fig/jyothitrans.png}%
+            }%
+}}
+\makeatother
+%You can include the watemark by using \begin{water} and \end{water} block
+
+
+\voffset -.5in
+\textheight 10.69 in
+
+%Document begins here
+
+
+\begin{document}
+\setlength{\parindent}{12pt}
+\linespread{1}
+\textheight 9.29 in
+\headsep .4in
+\footskip 40pt
+\include{contents/title_page}
+%\include{contents/cover_page}
+
+\justifying
+\include{contents/declaration}
+\phantomsection	
+\justifying
+\include{contents/cert}
+\phantomsection
+\justifying
+\include{contents/nba}
+\phantomsection
+\justifying
+\include{contents/ack}
+\phantomsection	
+\justifying
+\include{contents/abst}
+\phantomsection	
+\clearpage
+%
+\phantomsection
+\pagenumbering{roman}
+\setcounter{page}{2}
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{Contents}}
+\tableofcontents
+\clearpage
+\phantomsection
+
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{List of Tables}}
+\listoftables
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{List of Figures}}
+\listoffigures
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{List of Abbreviations}}
+\include{contents/abb}
+\clearpage
+\phantomsection
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{List of Notations}}
+\include{contents/sym}
+\clearpage
+\phantomsection
+
+\pagenumbering{arabic}
+
+\pagestyle{fancyplain}
+\fancypagestyle{plain}{
+
+\lhead{\fontsize{10}{20}\selectfont \textit{Project Title}}
+\rhead{\fontsize{10}{20}\selectfont \textit{\thepage}}
+\lfoot{\fontsize{10}{20}\selectfont \textit{Jyothi Engineering College, Cheruthuruthy}}
+\rfoot{\fontsize{10}{20}\selectfont \textit{Dept. of CSE, Month \& Year}}
+\cfoot{} %this is necessary
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footruleskip}{1mm}
+}
+\lhead{\fontsize{10}{20}\selectfont \textit{Project Title}}
+\rhead{\fontsize{10}{20}\selectfont \textit{\thepage}}
+\lfoot{\fontsize{10}{20}\selectfont \textit{Jyothi Engineering College, Cheruthuruthy}}
+\rfoot{\fontsize{10}{20}\selectfont \textit{Dept. of CSE, Month \& Year}}
+\cfoot{} %this is necessary
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\footruleskip}{2mm}
+%
+%%\hyphenation{crypto-graphic net-works semi-conductor}
+%\justifying
+%\setlength{\parindent}{1cm}
+%\setcounter{page}{1}
+%\clearpage
+
+
+
+\include{contents/chapter1}
+\include{contents/chapter2}
+\include{contents/chapter3}
+\include{contents/chapter4}
+\include{contents/chapter5}
+
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{Reference}}
+\singlespacing
+\bibliographystyle{IEEEtran}
+\bibliography{Reference.bib}
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+						%If required please add it.
+\addcontentsline{toc}{chapter}{\normalsize  \hspace*{.2in}\textbf{Appendix Name}}
+\include{contents/appendixa}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

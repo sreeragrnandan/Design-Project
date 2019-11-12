@@ -1,0 +1,113 @@
+\chapter{APPLICATIONS}
+\hspace{2em} The applications include speaker recognition,
+music composer recognition, digit recognition, sequence
+prediction, collision avoidance, optical flow, and eye detection.
+The applications presented here were judiciously chosen to
+illustrate the inherent parallelism and versatility of the architecture;
+the architecture's ability to support feedforward,
+feedback, and lateral inter-core connectivity; the architecture's
+ability to support spatial, temporal, and spatio-temporal processing
+as well as event-driven sensors; the architecture's
+ability to support representative inputs such as voice, music,
+images, text, and video; the richness and diversity of intra-core
+connectivity; the compositional power of the programming
+paradigm; and the flexibility of the neuron model. All of
+the applications were prototyped and tested on the Compass
+simulator. Demonstrating the scalability of TrueNorth, the
+systems used for these applications range in size from 38 to $3.1\times10^{6}$ neurons, 122 to 14$\times10^{6}$ synaptic connections, and
+1 to 21$\times10^{6}$ cores.
+\section{Speaker Recognition}
+\hspace{2em} The ability to process and integrate information from
+multiple sensory modalities is a hallmark of cognitive systems.
+Given audio and video of 34 individuals from the CUAVE
+database  speaking the digits 0-9 and constructed a system
+that recognizes and classifies these speakers. The system draws
+upon two feature extraction approaches. The first is a spectral
+content estimator, which computes the dot product between
+an input signal and a bank of square-wave filters to convert
+a time-varying signal into a frequency space. The second is a
+convolution network, which is a popular, biologically inspired
+approach for visual processing  that uses convolutions with
+a filter library followed by averaging to create a feature set.
+Features are fed into a multilayer classifier that makes successive
+non-linear discriminations based on linear combinations
+of input features. The system includes three main corelets, a
+spectral content estimator corelet that process audio in parallel
+with a convolution network corelet that process video, both of
+which connect to a stackable classifier corelet.
+
+\section{Spectral Content Estimator}
+\hspace{2em} Input to this corelet is sent
+to a square-wave filter sub-corelet that implements a bank of
+square-wave filters with a configurable range of frequencies
+and phases. Each square wave is separated into positive
+and negative components, further divided into 256 sample
+segments, and a neuron is configured with a receptive field
+matching each segment. These neurons thus compute a portion
+of the total dot product of the input with a square wave.
+For inputs with NS samples, this design allows representation
+of a square wave across Ns/256  cores. In the summation
+corelet, a core collects all partial dot products for the same
+square wave. A single neuron is configured to sum the inputs,
+assigning a negative weight to inputs representing negative
+wave components and a positive weight to inputs representing
+positive wave components. The rate-coded output of a summation
+neuron thus represents the dot product of the input signal
+and the entire square wave.
+
+\section{Convolution Network}
+\hspace{2em} Input to this corelet is sent to a
+bank of convolution filter corelets, where it is divided into
+16$\times$16 patches, and each patch sent to a filter module corelet.
+A filter module corelet contains a single core whose neurons
+have receptive fields that individually represent a filter at a
+particular input location and collectively apply an optimal
+convolution of input with the desired filter. This set of corelets
+thereby convolves horizontal, vertical, and two diagonal edgeextraction
+kernels of dimension 3$\times$3 each with the input image.
+Output from a convolution filter corelet is sent to an averaging
+corelet, containing cores configured to do an average-anddownsample
+operation.
+
+\section{Stackable Classifier}
+\hspace{2em} This corelet uses classifier module
+corelets as its basic building block, where each such corelet
+attempts to predict the correct class label based on its own,
+partial set of input features. Training is accomplished by
+computing the covariance between a classifier module's input
+features and the corresponding binary class labels. Covariance
+values are converted into a synaptic crossbar by finding the
+closest fit of axon types, strength values, and binary synaptic
+states. By ensuring that the number of inputs to each corelet
+is less than or equal to 256, each corelet is implemented using
+a single core. For a system with NF features and NC classes.
+
+\section{Composer Recognition}
+\hspace{2em} To explore the use of recurrent networks for processing
+time-varying signals, which are pervasive in cognitive applications,
+and constructed a system to distinguish between
+musical scores of Bach and Beethoven. Given a MIDI file
+dataset of musical compositions, this system uses a liquid
+state machine, in conjunction with the stackable classifier
+previously discussed, to identify the music piece's composer.
+Liquid state machines  are computational constructs that
+rely on recurrent connectivity to extract discriminative features
+from time varying signals and provide a natural and elegant
+approach for extracting the recurring patterns found in music.
+
+\section{Digit Recognition}
+\hspace{2em} Recognizing and labeling symbols from noisy subsymbolic
+data is an essential capability for cognitive systems.
+Given handwritten digits (0-9) from the MNIST dataset,
+and developed a TrueNorth program to recognize and classify
+these images. This task is challenging due to variation among
+writing styles, even among handwriting instances from the
+same person repeatedly writing the same digit. To overcome
+this challenge, here uses an RBM , which is a generative
+and unsupervised learning algorithm that clusters and extracts
+features from data. This ability to cluster data into similar sets
+without using labels is appropriate to deal with the variations
+in writing styles, reducing the burden on the classifier. The
+system comprises an RBM-trained feature corelet that extracts
+image features and sends them to a stochastic gradient descent
+trained linear classifier corelet that identifies the digit.
